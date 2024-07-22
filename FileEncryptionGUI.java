@@ -138,6 +138,8 @@ public class FileEncryptionGUI extends JFrame {
         String drive = (String) driveSelector.getSelectedItem();
         String format = getSelectedFileFormat();
         String action = getSelectedAction();
+        String dummyFolderPath = "dummyFiles";
+        String additonalFolderPath = "additionalFiles";
 
         if (drive == null || format == null || action == null) {
             JOptionPane.showMessageDialog(this, "Please select all options before proceeding.");
@@ -150,8 +152,14 @@ public class FileEncryptionGUI extends JFrame {
                 JOptionPane.showMessageDialog(this, "Please select a critical file.");
                 return;
             }
-            JOptionPane.showMessageDialog(this, "Encrypting file: " + filePath + " on drive: " + drive + " with format: " + format);
-            // Implement encryption logic here
+            
+            Encryptor fileEncryptor = new Encryptor();
+            fileEncryptor.DummyFiles(dummyFolderPath, filePath);
+            fileEncryptor.AdditionalFiles(additonalFolderPath,filePath);
+            fileEncryptor.CombineFiles(drive, dummyFolderPath, additonalFolderPath);
+            JOptionPane.showMessageDialog(this, "Encryption Sucessful");
+
+
         } else if ("Retrieve".equals(action)) {
             criticalFileField.setText("");
             JOptionPane.showMessageDialog(this, "Retrieving files from drive: " + drive + " with format: " + format);
